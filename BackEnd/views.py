@@ -53,11 +53,10 @@ class Index(APIView):
         for i in range(len(async_result)):
             print(async_result[i])
             temp = str(async_result[i].url).replace("'", '').replace("b", "")
-            print(temp)
+            #Sauvegarde de l'objet en base
             tempurl = Url(result_lib=Config.SERVER_STATIC + temp,
                           score=async_result[i].score,
                           search_id=ClientSearch.objects.last().id)
-            #     TODO faire le formatage de l'url a stocker
             tempurl.save()
 
         return Response(PostSerializer(my_object).data, status=status.HTTP_201_CREATED)

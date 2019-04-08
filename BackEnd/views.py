@@ -72,18 +72,15 @@ class SearchDetail(APIView):
 
 class Indexing(APIView):
     def post(self, request, format=None):
-        indexing_type = request.data['type']
+        indexing_type = request.data['number']
+        number_of_result = request.data['number']
+        Config.MAX_RES = number_of_result
         if indexing_type in ['bow', 'CNN']:
-            # from multiprocessing import Pool
-            if indexing_type == 'bow':
-                from BackEnd.bow_retrieval.indexing import BowIndexing
-                # pool = Pool(processes=1)
-                # pool.apply_async(BowIndexing.index, [10])
-                result = BowIndexing.index
-                return Response("Indexing result : %d" % result, status=status.HTTP_201_CREATED)
-            elif indexing_type == 'CNN':
+            if indexing_type == 'CNN':
                 from BackEnd.CNN_retrieval.index import CNNIndexing
                 # pool = Pool(processes=1)
                 # pool.apply_async(CNNIndexing.index, [10])
                 result = CNNIndexing.index
                 return Response("Indexing result : %d" % result, status=status.HTTP_201_CREATED)
+
+        return Response("Bad Request", status=status.HTTP_400_BAD_REQUEST)

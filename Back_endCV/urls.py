@@ -24,7 +24,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     url(r'^img_searches/$', views.Index.as_view()),
     url(r'^img_searches/(?P<pk>[0-9]+)/$', views.SearchDetail.as_view()),
-    url(r'^img_searches/indexing/$', views.Indexing.as_view())
+    url(r'^index/$', views.Indexing.as_view())
 ]
 
 urlpatterns = format_suffix_patterns(urlpatterns)
